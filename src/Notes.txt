@@ -2,3 +2,5 @@ docker run -d -p 6379:6379 --name aspnetrun-redis redis
 docker ps
 docker logs -f <name of the container>
 docker exec -it <container_name> /bin/bash  + redis-cli   --> locating inside container
+docker rmi 0f45
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
