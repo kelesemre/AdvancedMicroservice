@@ -5,3 +5,10 @@ docker exec -it <container_name> /bin/bash  + redis-cli   --> locating inside co
 docker rmi 0f45
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
 docker-compose -f docker-compose.yml -f docker-compose.override.yml down
+---
+grpc
+-html/2 protocol based
+-high speed
+-low latency
+-syncron communication
+-cross language support
