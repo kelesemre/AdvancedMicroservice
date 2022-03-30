@@ -56,7 +56,6 @@ namespace Discount.Grpc.Repository
 
             if (affected == 0)
                 return false;
-
             return true;
         }
     }
