@@ -4,6 +4,7 @@ docker logs -f <name of the container>
 docker exec -it <container_name> /bin/bash  + redis-cli   --> locating inside container
 docker rmi 0f45
 docker-compose -f docker-compose.yml -f docker-compose.override.yml up -d
+docker-compose -f docker-compose.yml -f docker-compose.override.yml up --build
 docker-compose -f docker-compose.yml -f docker-compose.override.yml down
 ---
 grpc
