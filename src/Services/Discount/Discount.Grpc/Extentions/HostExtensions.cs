@@ -13,7 +13,7 @@ namespace Discount.Grpc.Extentions
 {
     public static class HostExtensions
     {
-        public static IHost MigrateDatabase<TContext>(this IHost host, int? retry = 0)
+        public static IHost MigrateDatabase<TContext>(this IHost host)
         {
             using (var scope = host.Services.CreateScope())
             {
@@ -25,7 +25,7 @@ namespace Discount.Grpc.Extentions
                 {
                     logger.LogInformation("Migrating postresql database.");
 
-                    var retryPolicy = Policy.Handle<NpgsqlException>()
+                    var retry = Policy.Handle<NpgsqlException>()
                             .WaitAndRetry(
                                 retryCount: 5,
                                 sleepDurationProvider: retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)), // 2,4,8,16,32 sc
@@ -37,7 +37,7 @@ namespace Discount.Grpc.Extentions
                     //if the postgresql server container is not created on run docker compose this
                     //migration can't fail for network related exception. The retry options for database operations
                     //apply to transient exceptions                    
-                    retryPolicy.Execute(() => ExecuteMigrations(configuration));
+                    retry.Execute(() => ExecuteMigrations(configuration));
 
                     logger.LogInformation("Migrated postresql database.");
                 }
@@ -49,6 +49,7 @@ namespace Discount.Grpc.Extentions
 
             return host;
         }
+
         private static void ExecuteMigrations(IConfiguration configuration)
         {
             using var connection = new NpgsqlConnection(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
@@ -74,7 +75,6 @@ namespace Discount.Grpc.Extentions
 
             command.CommandText = "INSERT INTO Coupon(ProductName, Description, Amount) VALUES('Samsung 10', 'Samsung Discount', 100);";
             command.ExecuteNonQuery();
-            connection.Close();
         }
     }
 }
