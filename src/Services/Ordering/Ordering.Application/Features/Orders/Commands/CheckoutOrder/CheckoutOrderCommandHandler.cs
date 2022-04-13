@@ -25,10 +25,41 @@ namespace Ordering.Application.Features.Orders.Commands.CheckoutOrder
             _emailService = emailService ?? throw new ArgumentNullException(nameof(emailService));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
-
-        public Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
+        /// <summary>
+        /// Checkout and Send email
+        /// </summary>
+        /// <param name="request"></param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public async Task<int> Handle(CheckoutOrderCommand request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var orderEntity = _mapper.Map<Order>(request);
+            var newOrder = await _orderRepository.AddAsync(orderEntity);
+
+            _logger.LogInformation($"Order {newOrder.Id} is successfully created.");
+
+            await SendMail(newOrder);
+
+            return newOrder.Id;
+        }
+
+        private async Task SendMail(Order newOrder)
+        {
+            var email = new Email()
+            {
+                To = "emrekeless@gmail.com",
+                Body = $"Order was created.",
+                Subject = "Order was created"
+            };
+
+            try
+            {
+                await _emailService.SendEmail(email);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Order {newOrder.Id} failed due to an error with the mail service: {ex.Message}");
+            }
         }
     }
 }
