@@ -29,7 +29,7 @@ namespace Ordering.Infrastructure.Persistence
                     UserName = "yek",
                     FirstName = "Emre",
                     LastName = "Keles",
-                    EmailAddress = "emrekeless@gmail.com",
+                    EmailAddress = "emrekeless1@gmail.com",
                     AddressLine = "Diemen",
                     Country = "The Netherlands",
                     TotalPrice = 350
