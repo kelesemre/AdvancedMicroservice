@@ -33,6 +33,16 @@ namespace Ordering.Infrastructure.Persistence
                     AddressLine = "Diemen",
                     Country = "The Netherlands",
                     TotalPrice = 350
+                },
+                  new Order()
+                {
+                    UserName = "lui",
+                    FirstName = "Luis",
+                    LastName = "Garcia",
+                    EmailAddress = "luisjaviergarcia@gmail.com",
+                    AddressLine = "Amsterdam",
+                    Country = "The Netherlands",
+                    TotalPrice = 250
                 }
             };
         }
