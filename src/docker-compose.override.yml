@@ -110,7 +110,6 @@ services:
     ports:
         - "7004:80"
 
-
   ocelotapigw:
     container_name: ocelotapigw
     environment:
@@ -122,7 +121,6 @@ services:
         - ordering.api
     ports:
       - "7010:80"
-
 
   shopping.aggregator:
     container_name: shopping.aggregator
@@ -138,3 +136,16 @@ services:
     ports:
         - "7005:80"
 
+  aspnetrunbasics:
+    container_name: aspnetrunbasics
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ApiSettings:GatewayAddress=http://ocelotapigw"
+    depends_on:
+      - ocelotapigw
+      - catalog.api
+      - basket.api
+      - discount.api
+      - ordering.api
+    ports:
+      - "7006:80"
