@@ -1,4 +1,5 @@
 using AspnetRunBasics.Services;
+using Common.Logging;
 //using Common.Logging;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
@@ -28,26 +29,29 @@ namespace AspnetRunBasics
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddTransient<LoggingDelegatingHandler>();
+            services.AddTransient<LoggingDelegatingHandler>();
 
             services.AddHttpClient<ICatalogService, CatalogService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
-            /*.AddHttpMessageHandler<LoggingDelegatingHandler>()
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]))
+            .AddHttpMessageHandler<LoggingDelegatingHandler>();
+            /*
             .AddPolicyHandler(GetRetryPolicy())
             .AddPolicyHandler(GetCircuitBreakerPolicy());
             */
             services.AddHttpClient<IBasketService, BasketService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
-            /*.AddHttpMessageHandler<LoggingDelegatingHandler>()
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]))
+            .AddHttpMessageHandler<LoggingDelegatingHandler>();
+            /*.
             .AddPolicyHandler(GetRetryPolicy())
             .AddPolicyHandler(GetCircuitBreakerPolicy());
             */
             services.AddHttpClient<IOrderService, OrderService>(c =>
-                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]));
-                /*.AddHttpMessageHandler<LoggingDelegatingHandler>()
-                .AddPolicyHandler(GetRetryPolicy())
-                .AddPolicyHandler(GetCircuitBreakerPolicy());
-                */
+                c.BaseAddress = new Uri(Configuration["ApiSettings:GatewayAddress"]))
+            .AddHttpMessageHandler<LoggingDelegatingHandler>();
+            /*
+            .AddPolicyHandler(GetRetryPolicy())
+            .AddPolicyHandler(GetCircuitBreakerPolicy());
+            */
             services.AddRazorPages();
 
             services.AddHealthChecks()
@@ -67,7 +71,7 @@ namespace AspnetRunBasics
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            
+
             app.UseStaticFiles();
 
             app.UseRouting();
