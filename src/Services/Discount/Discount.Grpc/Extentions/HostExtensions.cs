@@ -4,9 +4,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Polly;
 
 namespace Discount.Grpc.Extentions
@@ -53,7 +50,7 @@ namespace Discount.Grpc.Extentions
         {
             using var connection = new NpgsqlConnection(configuration.GetValue<string>("DatabaseSettings:ConnectionString"));
             connection.Open();
-
+             
             using var command = new NpgsqlCommand
             {
                 Connection = connection
@@ -67,7 +64,6 @@ namespace Discount.Grpc.Extentions
                                                                 Description TEXT,
                                                                 Amount INT)";
             command.ExecuteNonQuery();
-
 
             command.CommandText = "INSERT INTO Coupon(ProductName, Description, Amount) VALUES('IPhone X', 'IPhone Discount', 150);";
             command.ExecuteNonQuery();
