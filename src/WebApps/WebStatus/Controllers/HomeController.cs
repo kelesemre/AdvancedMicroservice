@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
 using WebStatus.Models;
 
 namespace WebStatus.Controllers
@@ -20,7 +16,8 @@ namespace WebStatus.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/healthchecks-ui"); // predefine url
+            //return View();
         }
 
         public IActionResult Privacy()
