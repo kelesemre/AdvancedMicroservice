@@ -21,4 +21,4 @@ jobs:
         run: dotnet restore ./src/AdvancedMicroservice.sln
       
       - name: Build App
-        run: dotnet build .\src\AdvancedMicroservice.sln
+        run: dotnet build ./src/AdvancedMicroservice.sln -c --no-restore
