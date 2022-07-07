@@ -18,7 +18,7 @@ jobs:
           dotnet-version: '5.0.x'
       
       - name: Restore Dependencies
-        run: dotnet restore .\src\AdvancedMicroservice.sln
+        run: dotnet restore ./src/AdvancedMicroservice.sln
       
       - name: Build App
         run: dotnet build .\src\AdvancedMicroservice.sln
