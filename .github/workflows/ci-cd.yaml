@@ -22,3 +22,6 @@ jobs:
       
       - name: Build App
         run: dotnet build ./src/AdvancedMicroservice.sln 
+      
+      - name: Run Automated Tests
+        run: dotnet test ./src/AdvancedMicroservice.sln 
